@@ -1,3 +1,13 @@
+podTemplate(name: 'maven33', label: 'maven33', cloud: 'openshift', containers: [
+    containerTemplate(name: 'jnlp',
+                image: 'openshift/jenkins-slave-maven-centos7',
+                workingDir: '/tmp',
+                envVars: [
+                    envVar(key: 'MAVEN_MIRROR_URL',value: 'http://nexus/nexus/content/groups/public/')
+                ],
+                cmd: '',
+                args: '${computer.jnlpmac} ${computer.name}')
+]){
 node("maven") {
   stage("Build JAR") {
     git url: "https://github.com/burrsutter/inventory-wildfly-swarm"
@@ -14,4 +24,5 @@ node("maven") {
   stage("Deploy") {
     openshiftDeploy deploymentConfig: "inventory"
   }
+}
 }
