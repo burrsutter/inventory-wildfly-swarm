@@ -1,6 +1,6 @@
 node("maven") {
   stage("Build JAR") {
-    git url: "INVENTORY-GIT-URL"
+    git url: "https://github.com/burrsutter/inventory-wildfly-swarm"
     sh "mvn clean package"
     stash name:"jar", includes:"target/inventory-1.0-SNAPSHOT-swarm.jar"
   }
